@@ -1,0 +1,8 @@
+.background_red{
+    background-color: red;
+    transition: background-color 3s ease;
+}
+
+:host{
+    --highlight-color: green!important;
+}
