@@ -40,57 +40,157 @@
 
 
 @section('custom_js')
-    <script>
-        // NOTE: this example uses the chess.js library:
-        // https://github.com/jhlywa/chess.js
 
-        const board = document.querySelector("chess-board");
+    <script src="http://{{request()->getHttpHost()}}:3000/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io("//{{request()->getHttpHost()}}:3000");
+
+        socket.on('prova', function(msg) {
+            console.log(msg)
+            //console.log(board)
+            //console.log(game)
+            board.setPosition(msg['fen']);
+            const move = game.move({
+                from: msg['source'],
+                to: msg['target'],
+                promotion: 'q' // NOTE: en cas de ser un peo i arribal al final ho premou a reina sempre
+            });
+
+        });
+    </script>
+    <script>
+        // crear la taula d'escacs
+        const board = document.querySelector('chess-board');
+        // crea la partida
         const game = new Chess();
+
+        console.log(game)
+
         const statusElement = document.querySelector("#status");
         // const fenElement = document.querySelector("#fen");
         const pgnElement = document.querySelector("#pgn");
+        const highlightStyles = document.createElement('style');
+        document.head.append(highlightStyles);
 
-        board.addEventListener("drag-start", (e) => {
-            const { source, piece, position, orientation } = e.detail;
+        // els colors marcats al terra depenents de sobre quin color sigui el quadrat
+        // // const whiteSquareGrey = '#a9a9a9';
+        // // const blackSquareGrey = '#696969';
+        const whiteSquareGrey = '#d6d2d2';
+        const blackSquareGrey = '#aba4a4';
 
-            // do not pick up pieces if the game is over
+
+        //funcio borrar el quadrats marcats
+        function removeGreySquares() {
+            highlightStyles.textContent = '';
+        }
+
+        // funcio marcar el quadrat
+        function greySquare(square) {
+            // el color del quadrat
+            const highlightColor = (square.charCodeAt(0) % 2) ^ (square.charCodeAt(1) % 2)
+                ? whiteSquareGrey
+                : blackSquareGrey;
+
+            highlightStyles.textContent += `
+                chess-board::part(${square}) {
+                  background-color: ${highlightColor};
+                }
+            `;
+        }
+
+        // listener de guan començes a moure la peça
+        board.addEventListener('drag-start', (e) => {
+            const {source, piece , position, orientation } = e.detail;
+
+            // en cas de que la partida hagi acabat no deixa arrastar la peça
             if (game.game_over()) {
                 e.preventDefault();
                 return;
             }
 
-            // only pick up pieces for the side to move
-            if (
-                (game.turn() === "w" && piece.search(/^b/) !== -1) ||
-                (game.turn() === "b" && piece.search(/^w/) !== -1)
-            ) {
+            // en cas de que no sigui el trorn del color que estas aarastant no diexa moure
+            if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+                (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
                 e.preventDefault();
                 return;
             }
         });
 
-        board.addEventListener("drop", (e) => {
-            const { source, target, setAction } = e.detail;
+        // listener de quan deixes la peça caure sobre una posicio
+        board.addEventListener('drop', (e) => {
+            const {source, target, setAction} = e.detail;
 
-            // see if the move is legal
+
+            // treure els moviments marcats
+            removeGreySquares();
+
+            // mira si el moviment es legal
             const move = game.move({
                 from: source,
                 to: target,
-                promotion: "q", // NOTE: always promote to a queen for example simplicity
+                promotion: 'q' // NOTE: en cas de ser un peo i arribal al final ho premou a reina sempre
             });
 
-            // illegal move
-            if (move === null) {
-                console.log(e)
-                setAction("snapback");
-            }
+            console.log("updating...")
+
+
             updateStatus();
+            // // illegal move
+            // if (move === null) {
+            //     setAction('snapback');
+            // }
+
+            // proves
+            if (move === null) {
+                setAction('snapback');
+                console.log("bacck to normal")
+            }else{
+                socket.emit('prova', {
+                    'source': source,
+                    'target': target,
+                    'promotion': 'q',
+                    'fen': game.fen()
+                });
+                console.log("canvi de posicio")
+            }
         });
 
-        // update the board position after the piece snap
-        // for castling, en passant, pawn promotion
-        board.addEventListener("snap-end", (e) => {
-            board.setPosition(game.fen());
+
+        // listener al de fet hover sobre el quadradet
+        board.addEventListener('mouseover-square', (e) => {
+            const {square, piece} = e.detail;
+
+            //console.log("quadrat -> "+square)
+            //console.log("peça -> "+piece)
+
+            // llistat de posibles mobiments per quadrat
+            const moves = game.moves({
+                square: square,
+                verbose: true
+            });
+
+            // si no ha trobat posibles moviments per el quadrat surt de la funció
+            if (moves.length === 0) {
+                return;
+            }
+
+            // remarca el quadrat on es fa hover
+            greySquare(square);
+
+            // remarca els posibles moviments
+            for (const move of moves) {
+                greySquare(move.to);
+            }
+        });
+
+        // treure els moviments marcats al treure el hover
+        board.addEventListener('mouseout-square', (e) => {
+            removeGreySquares();
+        });
+
+        board.addEventListener('snap-end', (e) => {
+            board.setPosition(game.fen())
+            console.log('moviment ---->>'+game.fen())
         });
 
         function updateStatus() {
@@ -127,13 +227,10 @@
         }
 
         updateStatus();
+
     </script>
 
 
-    <script>
-        $(document).ready(function(){
-            console.log('adding class')
-            $('#square-b2').addClass('');
-        })
-    </script>
+
+
 @endsection
