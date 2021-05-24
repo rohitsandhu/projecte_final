@@ -42,7 +42,7 @@
 
         var socket = io("//{{request()->getHttpHost()}}:3000");
 
-        socket.on('prova', function(msg) {
+        socket.on('game', function(msg) {
             console.log(msg)
             //consonle.log(board)
             //console.log(game)
@@ -148,7 +148,7 @@
                 console.log('this is the socket id'+socket.id)
                 console.log('this is the socket id'+socket.id)
                 console.log('this is the socket id'+socket.id)
-                socket.emit('prova', {
+                socket.emit('game', {
                     'source': source,
                     'target': target,
                     'promotion': 'q',
