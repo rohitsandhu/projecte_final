@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\UserController;
+use App\Http\Middleware\CheckLogged;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [UserController::class, "home"])->name("home")->middleware(CheckLogged::class);
+
+Route::get('game', [GameController::class, "game"])->name("game")->middleware(CheckLogged::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+

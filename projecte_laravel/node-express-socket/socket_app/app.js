@@ -11,16 +11,18 @@ const io = new Server(server, {
         methods: ["GET", "POST"],
     }
 });
+
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    console.log('a user connected '+socket.id);
 
     socket.on('prova', (msg) => {
         console.log('misatge arribat')
-        io.emit('prova', msg); // This will emit the event to all connected sockets
+        socket.broadcast.emit('prova', msg); // This will emit the event to all connected sockets
     })
 
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+
+        console.log('user disconnected '+socket.id);
     });
 
 

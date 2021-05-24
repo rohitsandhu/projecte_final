@@ -6,3 +6,7 @@
 :host{
     --highlight-color: green!important;
 }
+
+.amagar{
+    display: none;
+}

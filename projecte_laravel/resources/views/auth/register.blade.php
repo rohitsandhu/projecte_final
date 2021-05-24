@@ -1,8 +1,11 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+
+            <title>Register</title>
+            <a >
+{{--                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />--}}
+                <img class="w-20 h-20 fill-current text-gray-500" src="{{asset('img/logo.png')}}" alt="">
             </a>
         </x-slot>
 
@@ -45,13 +48,16 @@
                                 name="password_confirmation" required />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
+                <div class="block mt-4">
 
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                        {{ __('Already have an account? Click here.') }}
+                    </a>
+
+                </div>
+            <div class="flex items-center justify-end mt-4">
                 <x-button class="ml-4">
-                    {{ __('Register') }}
+                    {{ __('Registrar') }}
                 </x-button>
             </div>
         </form>
