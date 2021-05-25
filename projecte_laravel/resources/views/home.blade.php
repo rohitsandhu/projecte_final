@@ -12,46 +12,54 @@
 
 @section('content')
     <div class="col" id="div_home">
-        <h1>HOME</h1>
+        <h1 class="m-2">HOME</h1>
 
         <div class="container">
 
-            <h4> Create new game </h4>
-
-                <div class="form-floating mb-3">
-                    <input type="hidden" id="name_user" value="{{Auth::user()->name}}">
-                    <input type="hidden" id="id_user" value="{{Auth::user()->id}}">
-
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="game_name" placeholder="Game name">
-                        <label for="game_name">Game name</label>
-                    </div>
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="game_password" placeholder="Game password">
-                        <label for="game_password">Game password</label>
-                    </div>
-
-                    <button onclick="crearPartida()" class="btn btn-lg btn-light my-2"> Create </button>
+            <div class="card text-center my-5">
+                <div class="card-header">
+                    <h4> Create new game </h4>
                 </div>
-        </div>
+                <div class="card-body">
+                    <div class="form-floating mb-3">
+                        <input type="hidden" id="name_user" value="{{Auth::user()->name}}">
+                        <input type="hidden" id="id_user" value="{{Auth::user()->id}}">
 
-        <div class="container">
-            <h4> Join game </h4>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="game_name" placeholder="Game name">
+                            <label for="game_name">Game name</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="game_password" placeholder="Game password">
+                            <label for="game_password">Game password</label>
+                        </div>
 
-                <div class="form-floating mb-3">
-                    <input type="hidden" id="name_user2" value="{{Auth::user()->name}}">
-                    <input type="hidden" id="id_user2" value="{{Auth::user()->id}}">
-
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="game_name2" placeholder="Game name">
-                        <label for="game_name2">Game name</label>
+                        <button onclick="crearPartida()" class="btn btn-lg btn-dark my-2"> Create </button>
                     </div>
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="game_password2" placeholder="Game password">
-                        <label for="game_password2">Game password</label>
-                    </div>
-                    <button onclick="entrarPartida()" class="btn btn-lg btn-light m-2"> Join </button>
                 </div>
+            </div>
+
+            <div class="card text-center">
+                <div class="card-header">
+                    <h4> Join game </h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-floating mb-3">
+                        <input type="hidden" id="name_user2" value="{{Auth::user()->name}}">
+                        <input type="hidden" id="id_user2" value="{{Auth::user()->id}}">
+
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="game_name2" placeholder="Game name">
+                            <label for="game_name2">Game name</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="game_password2" placeholder="Game password">
+                            <label for="game_password2">Game password</label>
+                        </div>
+                        <button onclick="entrarPartida()" class="btn btn-lg btn-dark m-2"> Join </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -61,6 +69,7 @@
 
         <div class="col-6 py-3 amagar" id="div2">
             <chess-board id="taula" draggable-pieces position="start"></chess-board>
+            <input type="hidden" id="token_sala">
         </div>
 
         <div class="col-4 px-sm-2 px-0 bg-dark text-white amagar" id="div1">
@@ -94,19 +103,27 @@
 
         var socket = io("//{{request()->getHttpHost()}}:3000");
 
-        socket.on('game', function(msg) {
-            console.log(msg)
+        socket.on('game', function(moviment) {
+
+            // console.log(moviment)
             //consonle.log(board)
             //console.log(game)
-            board.setPosition(msg['fen']);
-            const move = game.move({
-                from: msg['source'],
-                to: msg['target'],
-                promotion: 'q' // NOTE: en cas de ser un peo i arribal al final ho premou a reina sempre
-            });
-            updateStatus();
+
+            if (moviment['game_token'] == $('#token_sala').val()){
+
+                board.setPosition(moviment['fen']);
+                const move = game.move({
+                    from: moviment['source'],
+                    to: moviment['target'],
+                    promotion: 'q' //  En cas de ser un peo i arribal al final ho premou a reina sempre
+                });
+                updateStatus();
+            }
+
 
         });
+
+
 
 
         //function crear partida
@@ -117,8 +134,10 @@
             var user_name = $('#name_user').val();
             var user_id = $('#id_user').val();
 
+            console.log("game_name-->>>")
             console.log(game_name)
             console.log($('#game_name').text())
+            console.log(" ->>>")
             console.log(game_pass)
 
             if (game_name !== "" && game_pass !== "") {
@@ -168,7 +187,7 @@
 
             console.log("credencials partida ->>> ")
             console.log(partida)
-
+            $('#token_sala').val(partida['game_token'])
             if (partida['player2_id'] !== '' ){
                 console.log("la partida ja pot començar :D");
 
@@ -180,6 +199,8 @@
                     board.orientation = 'black';
                     console.log("tu jugas amb les peces negres   ")
                 }
+            }else{
+                console.log("waiting for the other player")
             }
 
         })
@@ -237,17 +258,16 @@
             console.log("orientació ->>>>>")
             console.log(orientation)
             // orientation === 'black' &&
-            // en cas de que no sigui el trorn del color que estas aarastant no diexa moure
+
             console.log("game.turn --->>>>")
             console.log(game.turn())
             if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
                 (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
                 console.log("en el prevent default :ccccccccccccccccccccc")
-
-
                 e.preventDefault();
                 return;
             }else{
+                // en cas de que el torn sigui del color contrari a la teva orientació fa que no puguis moure les peces.
                 if (game.turn() === 'w' && orientation === 'black' || game.turn() === 'b' && orientation === 'white' ){
                     e.preventDefault();
                     return;
@@ -289,11 +309,13 @@
                 console.log('this is the socket id'+socket.id)
                 console.log('this is the socket id'+socket.id)
                 console.log('this is the socket id'+socket.id)
+
                 socket.emit('game', {
                     'source': source,
                     'target': target,
                     'promotion': 'q',
-                    'fen': game.fen()
+                    'fen': game.fen(),
+                    'game_token': $('#token_sala').val()
                 });
                 console.log("canvi de posicio")
             }

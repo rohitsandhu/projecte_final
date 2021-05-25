@@ -17,6 +17,10 @@ Use a better box model (opinionated).
   box-sizing: border-box;
 }
 
+*{
+    font-family: 'Passion One', cursive;
+}
+
 /**
 Use a more readable tab size (opinionated).
 */

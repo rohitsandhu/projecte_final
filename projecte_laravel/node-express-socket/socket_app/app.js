@@ -17,9 +17,11 @@ var partides = [];
 io.on('connection', (socket) => {
     console.log('a user connected '+socket.id);
 
-    socket.on('game', (msg) => {
+    socket.on('game', (moviment) => {
         console.log('misatge arribat')
-        socket.broadcast.emit('game', msg); // This will emit the event to all connected sockets
+        console.log("el moviment a fer i el token de la sala son els seguent ->>>>")
+        console.log(moviment)
+        socket.broadcast.emit('game', moviment);
     })
 
     socket.on('disconnect', () => {
@@ -41,9 +43,6 @@ io.on('connection', (socket) => {
         if (newArray.length <1){
 
             console.log("no hi han partides amb el mateix nom ara mateix")
-
-
-
 
             console.log("creant token per a la partida nova")
             console.log("token ->>>>")
