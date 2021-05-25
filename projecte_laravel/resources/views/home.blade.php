@@ -60,7 +60,7 @@
 {{--    <div id="div_game" class="amagar">--}}
 
         <div class="col-6 py-3 amagar" id="div2">
-            <chess-board  position="start"></chess-board>
+            <chess-board id="taula" draggable-pieces position="start"></chess-board>
         </div>
 
         <div class="col-4 px-sm-2 px-0 bg-dark text-white amagar" id="div1">
@@ -169,6 +169,19 @@
             console.log("credencials partida ->>> ")
             console.log(partida)
 
+            if (partida['player2_id'] !== '' ){
+                console.log("la partida ja pot començar :D");
+
+                console.log({{Auth::user()->id}})
+                console.log(partida['player2_id'] )
+                if (partida['player2_id'] == {{Auth::user()->id}}){
+                    // orientation="black"
+                    // $('#taula').attr('orientation','black')
+                    board.orientation = 'black';
+                    console.log("tu jugas amb les peces negres   ")
+                }
+            }
+
         })
 
 
@@ -221,11 +234,24 @@
                 return;
             }
 
+            console.log("orientació ->>>>>")
+            console.log(orientation)
+            // orientation === 'black' &&
             // en cas de que no sigui el trorn del color que estas aarastant no diexa moure
+            console.log("game.turn --->>>>")
+            console.log(game.turn())
             if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
                 (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+                console.log("en el prevent default :ccccccccccccccccccccc")
+
+
                 e.preventDefault();
                 return;
+            }else{
+                if (game.turn() === 'w' && orientation === 'black' || game.turn() === 'b' && orientation === 'white' ){
+                    e.preventDefault();
+                    return;
+                }
             }
         });
 
