@@ -102,6 +102,7 @@ io.on('connection', (socket) => {
 
         if (newArray.length <1){
             console.log("l'hora de unir-se partida amb les credencials no trobada")
+            socket.emit('game_notfound',(credencials['user_id']));
         }else{
             console.log("partida trobada trobada amb les credencials indicades")
 
@@ -110,11 +111,19 @@ io.on('connection', (socket) => {
             if (newArray[0]['player2_id'] !== ''){
 
                 console.log("la partida ja té dos jugadors actualment")
+                socket.emit('game_full',(credencials['user_id']));
             }else {
 
                 console.log("partida trobada i no té dos jugadors acutalment")
 
                 console.log("afegin-te com a segon jugador")
+
+                for (var p in partides){
+                    if (partides[p]['game_token'] === newArray[0]['game_token']){
+                        partides[p]['player2_id'] = credencials['user_id'];
+                        partides[p]['player2_name'] = credencials['user_name'];
+                    }
+                }
 
                 var arrReturn = {
                     'game_token': newArray[0]['game_token'],
