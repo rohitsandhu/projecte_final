@@ -14,11 +14,12 @@
     <div class="col" id="div_home">
         <h1 class="m-2">HOME</h1>
 
+        <input type="hidden" id="id_user_logged" value="{{ Auth::user()->id }}">
         <div class="container">
 
             <div class="card text-center my-5">
                 <div class="card-header">
-                    <h4> Create new game </h4>
+                    <h4 class="mt-2"> Create new game </h4>
                 </div>
                 <div class="card-body">
                     <div class="form-floating mb-3">
@@ -29,19 +30,21 @@
                             <input type="text" class="form-control" id="game_name" placeholder="Game name">
                             <label for="game_name">Game name</label>
                         </div>
-                        <div class="form-floating">
+                        <div class="form-floating mt-1">
                             <input type="text" class="form-control" id="game_password" placeholder="Game password">
                             <label for="game_password">Game password</label>
                         </div>
 
                         <button onclick="crearPartida()" class="btn btn-lg btn-dark my-2"> Create </button>
+                        <p class="text-danger amagar" id="error_create_fill"> Fill the fields!! </p>
+                        <p class="text-danger amagar" id="error_create_exists"> Game with same name already exists!! </p>
                     </div>
                 </div>
             </div>
 
             <div class="card text-center">
                 <div class="card-header">
-                    <h4> Join game </h4>
+                    <h4 class="mt-2"> Join game </h4>
                 </div>
                 <div class="card-body">
                     <div class="form-floating mb-3">
@@ -52,11 +55,15 @@
                             <input type="text" class="form-control" id="game_name2" placeholder="Game name">
                             <label for="game_name2">Game name</label>
                         </div>
-                        <div class="form-floating">
+                        <div class="form-floating mt-1">
                             <input type="text" class="form-control" id="game_password2" placeholder="Game password">
                             <label for="game_password2">Game password</label>
                         </div>
                         <button onclick="entrarPartida()" class="btn btn-lg btn-dark m-2"> Join </button>
+                        <p class="text-danger amagar" id="error_join_fill"> Fill the fields!! </p>
+                        <p class="text-danger amagar" id="error_join_credentials"> Game with this credencials not found!! </p>
+                        <p class="text-danger amagar" id="error_join_full"> Game is full!! </p>
+
                     </div>
                 </div>
             </div>
@@ -110,7 +117,6 @@
             //console.log(game)
 
             if (moviment['game_token'] == $('#token_sala').val()){
-
                 board.setPosition(moviment['fen']);
                 const move = game.move({
                     from: moviment['source'],
@@ -119,15 +125,25 @@
                 });
                 updateStatus();
             }
-
-
         });
 
+        socket.on('game_exists',(id_user) =>{
 
+            if (id_user == $('#id_user_logged').val()){
+                $('#error_create_exists').removeClass('amagar');
+            }
 
-
+        })
         //function crear partida
         function crearPartida(){
+
+            // amagar tots els errors
+            $('#error_create_fill').addClass('amagar');
+            $('#error_create_exists').addClass('amagar');
+            $('#error_join_credentials').addClass('amagar');
+            $('#error_join_fill').addClass('amagar');
+            $('#error_join_full').addClass('amagar');
+
 
             var game_name = $('#game_name').val();
             var game_pass = $('#game_password').val();
@@ -156,6 +172,13 @@
 
         function entrarPartida(){
 
+            // amagar tots els errors
+            $('#error_create_fill').addClass('amagar');
+            $('#error_create_exists').addClass('amagar');
+            $('#error_join_credentials').addClass('amagar');
+            $('#error_join_fill').addClass('amagar');
+            $('#error_join_full').addClass('amagar');
+
             var game_name2 = $('#game_name2').val();
             var game_pass2 = $('#game_password2').val();
             var user_name2 = $('#name_user2').val();
@@ -179,7 +202,6 @@
             }
         }
 
-
         socket.on('goGame', function(partida){
             $('#div_home').addClass('amagar')
             $('#div1').removeClass('amagar')
@@ -190,10 +212,8 @@
             $('#token_sala').val(partida['game_token'])
             if (partida['player2_id'] !== '' ){
                 console.log("la partida ja pot començar :D");
-
-                console.log({{Auth::user()->id}})
                 console.log(partida['player2_id'] )
-                if (partida['player2_id'] == {{Auth::user()->id}}){
+                if (partida['player2_id'] == $('#id_user_logged').val()){
                     // orientation="black"
                     // $('#taula').attr('orientation','black')
                     board.orientation = 'black';
@@ -202,9 +222,7 @@
             }else{
                 console.log("waiting for the other player")
             }
-
         })
-
 
         // crear la taula d'escacs
         const board = document.querySelector('chess-board');

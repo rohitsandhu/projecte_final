@@ -5,6 +5,7 @@ const server = http.createServer(app);
 
 const { Server } = require("socket.io");
 // const io = new Server(server);
+
 const io = new Server(server, {
     cors: {
         origin: "http://localhost",
@@ -35,7 +36,6 @@ io.on('connection', (socket) => {
             return  el['game_name']  === partida_creador['game_name'] &&
                     el['game_pass']  === partida_creador['game_pass'];
         });
-
 
         console.log("partides trobades ->>")
         console.log(newArray)
@@ -78,22 +78,16 @@ io.on('connection', (socket) => {
                 'player2_id' : '',
                 'player2_name' : '',
             })
+
         }else{
             console.log("ja existeix partida amb el mateix nom go next ")
+
+            socket.emit('game_exists',(partida_creador['user_id']));
         }
     });
 
 
     socket.on('joinGame', function (credencials) {
-
-        // partides.push({
-        //     'game_name': "name",
-        //     'game_pass': "pass",
-        //     'player1_id' : "id",
-        //     'player1_name' : "name2",
-        //     'player2_id' : '',
-        //     'player2_name' : ''
-        // })
 
         console.log(partides)
         var newArray = partides.filter(function (el) {
@@ -101,13 +95,10 @@ io.on('connection', (socket) => {
                 el['game_pass']  === credencials['game_pass'];
         });
 
-
         console.log("buscar partides amb el mateix nom i la contrasenya a l'hora de unir-se")
-
 
         console.log("partides trobades -->>>>")
         console.log(newArray)
-
 
         if (newArray.length <1){
             console.log("l'hora de unir-se partida amb les credencials no trobada")
@@ -122,7 +113,6 @@ io.on('connection', (socket) => {
             }else {
 
                 console.log("partida trobada i no té dos jugadors acutalment")
-
 
                 console.log("afegin-te com a segon jugador")
 
