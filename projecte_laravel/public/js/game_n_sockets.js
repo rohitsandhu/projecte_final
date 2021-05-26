@@ -1,3 +1,6 @@
+//####################################################
+//              Socket listeners
+//####################################################
 socket.on('game', function(moviment) {
 
     // console.log(moviment)
@@ -37,6 +40,48 @@ socket.on('game_full',(id_user) =>{
         $('#error_join_full').removeClass('amagar');
     }
 })
+
+
+socket.on('secondplayerfound', function(partida){
+    console.log("second person foundd")
+    console.log("second person foundd")
+    console.log("second person foundd")
+    console.log("second person foundd")
+    console.log("second person foundd")
+    if ($('#id_user_logged').val() == partida['player1_id']){
+        $('#taula').attr("draggable-pieces",true)
+    }
+
+});
+
+
+
+socket.on('goGame', function(partida){
+    $('#div_home').addClass('amagar')
+    $('#div1').removeClass('amagar')
+    $('#div2').removeClass('amagar')
+
+    console.log("credencials partida ->>> ")
+    console.log(partida)
+    $('#token_sala').val(partida['game_token'])
+    if (partida['player2_id'] !== '' ){
+        console.log("la partida ja pot començar :D");
+        console.log(partida['player2_id'] )
+        if (partida['player2_id'] == $('#id_user_logged').val()){
+            // orientation="black"
+            // $('#taula').attr('orientation','black')
+            board.orientation = 'black';
+            console.log("tu jugas amb les peces negres   ")
+            document.getElementsByTagName("title")[0].innerText = "Chess Game";
+            // socket.emit('secondplayerfound', partida)
+            $('#taula').attr('draggable-pieces',true)
+        }
+    }else{
+        console.log("waiting for the other player")
+    }
+})
+
+
 //function crear partida
 function crearPartida(){
 
@@ -106,28 +151,6 @@ function entrarPartida(){
         $('#error_join_fill').removeClass('amagar')
     }
 }
-
-socket.on('goGame', function(partida){
-    $('#div_home').addClass('amagar')
-    $('#div1').removeClass('amagar')
-    $('#div2').removeClass('amagar')
-
-    console.log("credencials partida ->>> ")
-    console.log(partida)
-    $('#token_sala').val(partida['game_token'])
-    if (partida['player2_id'] !== '' ){
-        console.log("la partida ja pot començar :D");
-        console.log(partida['player2_id'] )
-        if (partida['player2_id'] == $('#id_user_logged').val()){
-            // orientation="black"
-            // $('#taula').attr('orientation','black')
-            board.orientation = 'black';
-            console.log("tu jugas amb les peces negres   ")
-        }
-    }else{
-        console.log("waiting for the other player")
-    }
-})
 
 // crear la taula d'escacs
 const board = document.querySelector('chess-board');
@@ -347,7 +370,3 @@ function updateStatus() {
 
 updateStatus();
 
-// $(document).ready(function(){
-console.log($('#dragged-pieces'))
-
-// })
