@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f665fcaf-c304-447c-9513-6784b1346783" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node-express-socket/socket_app/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/node-express-socket/socket_app/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/game_n_sockets.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/game_n_sockets.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +184,7 @@
       <workItem from="1621950346480" duration="14610000" />
       <workItem from="1621975862466" duration="3830000" />
       <workItem from="1622037493745" duration="40000" />
-      <workItem from="1622037537238" duration="7668000" />
+      <workItem from="1622037537238" duration="8734000" />
     </task>
     <servers />
   </component>
