@@ -11,6 +11,10 @@
 
 
 @section('content')
+
+<div class="row">
+
+
     <div class="col" id="div_home">
         <h1 class="m-2">HOME</h1>
 
@@ -71,12 +75,13 @@
 
     </div>
 {{--    draggable-pieces--}}
-    <div class="col-6 py-3 amagar" id="div2">
+    <div class="col-1"></div>
+    <div class="col-lg-6 col-md-12 py-3 amagar" id="div2">
         <chess-board id="taula"  position="start"></chess-board>
         <input type="hidden" id="token_sala">
     </div>
-
-    <div class="col-4 px-sm-2 px-0 bg-dark text-white amagar" id="div1">
+    <div class="col-1"></div>
+    <div class="col-lg-4 px-sm-2 px-0 bg-dark text-white amagar" id="div1">
         <label>Game status:</label>
         <div id="status"></div>
 
@@ -94,6 +99,7 @@
         </table>
     </div>
 
+</div>
 @endsection
 
 @section('custom_js')
