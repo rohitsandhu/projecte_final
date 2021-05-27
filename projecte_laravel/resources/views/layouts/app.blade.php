@@ -58,7 +58,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link py-3 px-2 bg-dark text-white " title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Customers">
+                        <a href="#" class="nav-link py-3 px-2 bg-dark text-white " title="asdfasdfsadf" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Customers">
                             <i class="bi-people fs-1"></i>
                         </a>
                     </li>
@@ -77,6 +77,7 @@
         </div>
         <div class="col-sm min-vh-100">
             @yield('content')
+
         </div>
     </div>
 </div>
