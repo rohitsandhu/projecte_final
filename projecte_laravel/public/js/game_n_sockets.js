@@ -2,11 +2,6 @@
 //              Socket listeners
 //####################################################
 socket.on('game', function(moviment) {
-
-    // console.log(moviment)
-    //consonle.log(board)
-    //console.log(game)
-
     if (moviment['game_token'] == $('#token_sala').val()){
         board.setPosition(moviment['fen']);
         const move = game.move({
@@ -19,23 +14,18 @@ socket.on('game', function(moviment) {
 });
 
 socket.on('game_exists',(id_user) =>{
-
     if (id_user == $('#id_user_logged').val()){
         $('#error_create_exists').removeClass('amagar');
     }
-
 })
 
 socket.on('game_notfound',(id_user) =>{
-
     if (id_user == $('#id_user_logged').val()){
         $('#error_join_credentials').removeClass('amagar');
     }
 })
 
-
 socket.on('game_full',(id_user) =>{
-
     if (id_user == $('#id_user_logged').val()){
         $('#error_join_full').removeClass('amagar');
     }
@@ -50,14 +40,16 @@ socket.on('secondplayerfound', function(partida){
     console.log("second person foundd")
     if ($('#id_user_logged').val() == partida['player1_id']){
         $('#taula').attr("draggable-pieces",true)
+        $('#status').text('White\'s turn');
     }
-
 });
 
 
 
 socket.on('goGame', function(partida){
     $('#div_home').addClass('amagar')
+    $('#div_fake_1').removeClass('amagar')
+    $('#div_fake_2').removeClass('amagar')
     $('#div1').removeClass('amagar')
     $('#div2').removeClass('amagar')
 
@@ -77,6 +69,8 @@ socket.on('goGame', function(partida){
             $('#taula').attr('draggable-pieces',true)
         }
     }else{
+
+        $('#status').text('Waiting for the other player.');
         console.log("waiting for the other player")
     }
 })
@@ -314,19 +308,15 @@ function updateStatus() {
     }
 
     if (game.in_checkmate()) {
-        // checkmate?
         status = `Game over, ${moveColor} is in checkmate.`;
         console.log("has guanyat crack")
+        alert( ` ${moveColor} ha perdut`)
     } else if (game.in_draw()) {
-        // draw?
-        status = "Game over, drawn position";
+        status = "Game over, drawn/stallmate position";
         console.log("heu empatat cracks")
     } else {
-        // game still on
-        status = `${moveColor} to move`;
+        status = `${moveColor}'s turn`;
         console.log("et toca moure"+status)
-
-        // check?
         if (game.in_check()) {
             status += `, ${moveColor} is in check`;
             console.log("estas en jaque crack")
@@ -336,7 +326,9 @@ function updateStatus() {
     statusElement.innerHTML = status;
     // fenElement.innerHTML = game.fen();
     //pgnElement.innerHTML = game.pgn();
-    console.log(game.pgn())
+
+    console.log("fen ->>>>>>"+game.fen())
+    console.log("pgn ->>>>"+game.pgn())
 
 
     var split = game.pgn().split(' ');
@@ -346,9 +338,7 @@ function updateStatus() {
     for (var xd in split){
         if (iteration === 0){
             var tr = document.createElement('tr');
-            // let td = document.createElement('td');
-            // td.innerText = split[xd];
-            // tr.append(td)
+
         }
 
         let td = document.createElement('td');

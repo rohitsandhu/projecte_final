@@ -20,9 +20,9 @@ Route::get('/', [UserController::class, "home"])->name("home")->middleware(Check
 
 Route::get('game', [GameController::class, "game"])->name("game")->middleware(CheckLogged::class);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 

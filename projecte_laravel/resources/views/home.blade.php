@@ -75,15 +75,17 @@
 
     </div>
 {{--    draggable-pieces--}}
-    <div class="col-1"></div>
-    <div class="col-lg-6 col-md-12 py-3 amagar" id="div2">
+    <div class="col-1 amagar" id="div_fake_1"></div>
+    <div class="col-lg-6 col-md-10 col-sm-10 py-3 amagar" id="div2">
         <chess-board id="taula"  position="start"></chess-board>
         <input type="hidden" id="token_sala">
     </div>
-    <div class="col-1"></div>
+    <div class="col-1 amagar" id="div_fake_2"></div>
     <div class="col-lg-4 px-sm-2 px-0 bg-dark text-white amagar" id="div1">
-        <label>Game status:</label>
-        <div id="status"></div>
+        <hr class="text-white">
+        <label style="font-size: 20px">Game status:</label>
+        <div id="status" class="mt-1"></div>
+        <hr class="text-white">
 
         <table class="table">
             <thead class="table-light">
