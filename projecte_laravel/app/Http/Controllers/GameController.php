@@ -13,6 +13,7 @@ class GameController extends Controller
     function end_game(Request $request){
         $partida = $request->request->get('partida');
 
+        dd($partida);
 
         if ($partida['perdedor'] == "White"){
 

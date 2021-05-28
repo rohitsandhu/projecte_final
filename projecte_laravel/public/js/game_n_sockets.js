@@ -84,9 +84,6 @@ socket.on('goGame', function(partida){
 
 socket.on("acabar_partida", partida =>{
 
-
-
-
     if (partida['game_token'] == $('#partida_token').val()){
 
         console.log("(((((((((((((((((((((((((((((((((((((((((((((")
@@ -100,17 +97,18 @@ socket.on("acabar_partida", partida =>{
             data: {
                 '_token': $('meta[name="csrf-token"]').attr('content'),
                 '_method': 'post',
-                'partida':{
+                'partida': {
                     'game_token': partida['token'],
                     'game_name': partida['game_name'],
                     'game_pass': partida['game_pass'],
-                    'player1_id' : partida['user_id'],
-                    'player1_name' : partida['user_name'],
-                    'socket_id_player1': partida[''],
-                    'player2_id' :  partida[''],
-                    'player2_name' :  partida[''],
-                    'socket_id_player2':  partida[''],
-                    'estat': ''
+                    'player1_id' : partida['player1_id'],
+                    'player1_name' : partida['player1_name'],
+                    'socket_id_player1': partida['socket_id_player1'],
+                    'player2_id' :  partida['player2_id'],
+                    'player2_name' :  partida['player2_name'],
+                    'socket_id_player2':  partida['socket_id_player2'],
+                    'estat': partida['estat'],
+                    'perdedor': partida['perdedor'],
                 },
             },
             success:function(data) {
@@ -120,7 +118,6 @@ socket.on("acabar_partida", partida =>{
             }
         });
     }
-
 })
 
 
@@ -370,6 +367,7 @@ function updateStatus() {
             'b_id': $('#b_id').val(),
             'n_id': $('#n_id').val(),
             'partida_token': $('#partida_token').val(),
+            'perdedor': `${moveColor}`,
         });
 
     } else if (game.in_draw()) {

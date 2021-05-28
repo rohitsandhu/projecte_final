@@ -183,7 +183,19 @@ io.on('connection', (socket) => {
         console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 
         if (newArray.length > 0){
-            socket.broadcast.emit("acabar_partida",newArray[0]);
+            socket.broadcast.emit("acabar_partida",{
+                'game_token': newArray[0]['game_token'],
+                'game_name': newArray[0]['game_name'],
+                'game_pass': newArray[0]['game_pass'],
+                'player1_id': newArray[0]['player1_id'],
+                'player1_name': newArray[0]['player1_name'],
+                'socket_id_player1': partida['socket_id_player1'],
+                'player2_id' :  partida['player2_id'],
+                'player2_name' :  partida['player2_name'],
+                'socket_id_player2':  partida['socket_id_player2'],
+                'estat': partida['estat'],
+                'perdedor': partida['perdedor'],
+            });
         }
 
 
