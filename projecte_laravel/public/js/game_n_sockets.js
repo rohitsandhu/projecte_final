@@ -33,12 +33,14 @@ socket.on('game_full',(id_user) =>{
 
 
 socket.on('secondplayerfound', function(partida){
-    console.log("second person foundd")
-    console.log("second person foundd")
-    console.log("second person foundd")
-    console.log("second person foundd")
-    console.log("second person foundd")
+    console.log("second person found!!!")
     if ($('#id_user_logged').val() == partida['player1_id']){
+        $('#enemy_name').text(partida['player2_name'])
+
+        $('#b_id').val(partida['player1_id'])
+        $('#n_id').val(partida['player2_id'])
+        $('#partida_token').val(partida['game_token'])
+
         $('#taula').attr("draggable-pieces",true)
         $('#status').text('White\'s turn');
     }
@@ -58,21 +60,67 @@ socket.on('goGame', function(partida){
     $('#token_sala').val(partida['game_token'])
     if (partida['player2_id'] !== '' ){
         console.log("la partida ja pot començar :D");
+        console.log("la partida ja pot començar :D");
         console.log(partida['player2_id'] )
         if (partida['player2_id'] == $('#id_user_logged').val()){
             // orientation="black"
             // $('#taula').attr('orientation','black')
             board.orientation = 'black';
+            $('#enemy_name').text(partida['player1_name'])
             console.log("tu jugas amb les peces negres   ")
             document.getElementsByTagName("title")[0].innerText = "Chess Game";
             // socket.emit('secondplayerfound', partida)
+            $('#b_id').val(partida['player1_id'])
+            $('#n_id').val(partida['player2_id'])
+            $('#partida_token').val(partida['game_token'])
             $('#taula').attr('draggable-pieces',true)
         }
     }else{
-
         $('#status').text('Waiting for the other player.');
         console.log("waiting for the other player")
     }
+})
+
+
+socket.on("acabar_partida", partida =>{
+
+
+
+
+    if (partida['game_token'] == $('#partida_token').val()){
+
+        console.log("(((((((((((((((((((((((((((((((((((((((((((((")
+        console.log(partida)
+        console.log("(((((((((((((((((((((((((((((((((((((((((((((")
+
+
+        $.ajax({
+            type:'post',
+            url: '/end_game',
+            data: {
+                '_token': $('meta[name="csrf-token"]').attr('content'),
+                '_method': 'post',
+                'partida':{
+                    'game_token': partida['token'],
+                    'game_name': partida['game_name'],
+                    'game_pass': partida['game_pass'],
+                    'player1_id' : partida['user_id'],
+                    'player1_name' : partida['user_name'],
+                    'socket_id_player1': partida[''],
+                    'player2_id' :  partida[''],
+                    'player2_name' :  partida[''],
+                    'socket_id_player2':  partida[''],
+                    'estat': ''
+                },
+            },
+            success:function(data) {
+
+            },error: function () {
+
+            }
+        });
+    }
+
 })
 
 
@@ -309,8 +357,21 @@ function updateStatus() {
 
     if (game.in_checkmate()) {
         status = `Game over, ${moveColor} is in checkmate.`;
-        console.log("has guanyat crack")
-        alert( ` ${moveColor} ha perdut`)
+        console.log("has guanyat crack");
+        console.log( ` ${moveColor} ha perdut`)
+        console.log( ` ${moveColor} ha perdut`)
+        console.log( ` ${moveColor} ha perdut`)
+        console.log( ` ${moveColor} ha perdut`)
+        console.log( ` ${moveColor} ha perdut`)
+        console.log( ` ${moveColor} ha perdut`)
+        console.log( ` ${moveColor} ha perdut`)
+        console.log( ` ${moveColor} ha perdut`)
+        socket.emit("partida_acabada", {
+            'b_id': $('#b_id').val(),
+            'n_id': $('#n_id').val(),
+            'partida_token': $('#partida_token').val(),
+        });
+
     } else if (game.in_draw()) {
         status = "Game over, drawn/stallmate position";
         console.log("heu empatat cracks")

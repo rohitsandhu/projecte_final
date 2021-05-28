@@ -20,6 +20,8 @@ Route::get('/', [UserController::class, "home"])->name("home")->middleware(Check
 
 Route::get('game', [GameController::class, "game"])->name("game")->middleware(CheckLogged::class);
 
+Route::post('end_game',[GameController::class,"end_game"])->name('end_game')->middleware(CheckLogged::class);
+
 //Route::get('/dashboard', function () {
 //    return view('dashboard');
 //})->middleware(['auth'])->name('dashboard');

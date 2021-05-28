@@ -13,7 +13,26 @@
 @section('content')
 
     <div class="col-6 py-3">
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p><p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p><p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p><p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p><p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p><p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p><p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
+        <p>provbaprovbaprovbaprovbaprovbaprovbaprovbaprovba provbaprovbaprovba</p>
         <chess-board  position="start" draggable-pieces style="margin-bottom: -200px"></chess-board>
+
+
+
+
+
+
+
     </div>
     <div class="col-4 px-sm-2 px-0 bg-dark text-white">
         <label>Game status:</label>

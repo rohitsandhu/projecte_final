@@ -76,8 +76,19 @@
     </div>
 {{--    draggable-pieces--}}
     <div class="col-1 amagar" id="div_fake_1"></div>
-    <div class="col-lg-6 col-md-10 col-sm-10 py-3 amagar" id="div2">
-        <chess-board id="taula"  position="start"></chess-board>
+    <div class="col-lg-6 col-md-10 col-sm-10 py-3 pt-0 amagar" id="div2">
+{{--        <p style="font-size: 20px"> You vs. Hikaru Nakamura</p>--}}
+<div class="container-fluid d-flex justify-center">
+    <h3 class="m-0 text-center"> GAME NAME: dsjfksdjfkldsj </h3>
+</div>
+        <input type="hidden" id="b_id">
+        <input type="hidden" id="n_id">
+        <input type="hidden" id="partida_token">
+        <h4 id="enemy_name" class="mb-0"> ??? </h4>
+
+        <chess-board id="taula"  position="start">
+        </chess-board>
+        <h4 id="my_name" style="margin-top: -12%"> {{ Auth::user()->name }} </h4>
         <input type="hidden" id="token_sala">
     </div>
     <div class="col-1 amagar" id="div_fake_2"></div>

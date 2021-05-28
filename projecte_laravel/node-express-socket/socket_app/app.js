@@ -169,6 +169,26 @@ io.on('connection', (socket) => {
     });
 
 
+    socket.on("partida_acabada", function(partida){
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        console.log(partida)
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
+        var newArray = partides.filter(function (el) {
+            return  el['game_token']  === partida['partida_token'];
+        });
+
+        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+        console.log(newArray)
+        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+
+        if (newArray.length > 0){
+            socket.broadcast.emit("acabar_partida",newArray[0]);
+        }
+
+
+    })
+
     socket.on('joinGame', function (credencials) {
 
         console.log(partides)
