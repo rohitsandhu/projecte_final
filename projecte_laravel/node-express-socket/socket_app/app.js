@@ -169,7 +169,7 @@ io.on('connection', (socket) => {
     });
 
 
-    socket.on("partida_acabada", function(partida){
+    socket.on("partida_acabada_amb_guanyador", function(partida){
         console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         console.log(partida)
         console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
@@ -183,22 +183,51 @@ io.on('connection', (socket) => {
         console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 
         if (newArray.length > 0){
-            socket.broadcast.emit("acabar_partida",{
+
+            partidaa = {
                 'game_token': newArray[0]['game_token'],
                 'game_name': newArray[0]['game_name'],
                 'game_pass': newArray[0]['game_pass'],
                 'player1_id': newArray[0]['player1_id'],
                 'player1_name': newArray[0]['player1_name'],
-                'socket_id_player1': partida['socket_id_player1'],
-                'player2_id' :  partida['player2_id'],
-                'player2_name' :  partida['player2_name'],
-                'socket_id_player2':  partida['socket_id_player2'],
-                'estat': partida['estat'],
-                'perdedor': partida['perdedor'],
-            });
+                'socket_id_player1': newArray[0]['socket_id_player1'],
+                'player2_id' :  newArray[0]['player2_id'],
+                'player2_name' :  newArray[0]['player2_name'],
+                'socket_id_player2':  newArray[0]['socket_id_player2'],
+                'estat': newArray[0]['estat'],
+                'res': partida['perdedor'],
+            }
+
+            console.log('????????????????????????????????????????????????????????')
+            console.log(partidaa)
+            console.log('????????????????????????????????????????????????????????')
+            socket.emit("acabar_partida_amb_guanyador",(partidaa));
         }
 
 
+    })
+    socket.on("partida_acabada_amb_empat", function(partida){
+
+        var newArray = partides.filter(function (el) {
+            return  el['game_token']  === partida['partida_token'];
+        });
+
+        if (newArray.length > 0){
+            partidaa = {
+                'game_token': newArray[0]['game_token'],
+                'game_name': newArray[0]['game_name'],
+                'game_pass': newArray[0]['game_pass'],
+                'player1_id': newArray[0]['player1_id'],
+                'player1_name': newArray[0]['player1_name'],
+                'socket_id_player1': newArray[0]['socket_id_player1'],
+                'player2_id' :  newArray[0]['player2_id'],
+                'player2_name' :  newArray[0]['player2_name'],
+                'socket_id_player2':  newArray[0]['socket_id_player2'],
+                'estat': newArray[0]['estat'],
+                'res': "draw",
+            }
+            socket.emit("acabar_partida_amb_empat",(partidaa));
+        }
     })
 
     socket.on('joinGame', function (credencials) {
@@ -230,12 +259,16 @@ io.on('connection', (socket) => {
 
                 console.log("partida trobada i no té dos jugadors acutalment")
 
+
+
                 console.log("afegin-te com a segon jugador")
 
                 for (var p in partides){
                     if (partides[p]['game_token'] === newArray[0]['game_token']){
                         partides[p]['player2_id'] = credencials['user_id'];
                         partides[p]['player2_name'] = credencials['user_name'];
+                        partides[p]['socket_id_player2'] = socket.id;
+
                     }
                 }
 

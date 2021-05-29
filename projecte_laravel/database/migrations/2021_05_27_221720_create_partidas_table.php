@@ -17,10 +17,12 @@ class CreatePartidasTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('token',300);
-            $table->text('moviments_partida',60000);
+            $table->text('moviments_partida');
             $table->integer('b_id');
             $table->integer('n_id');
             $table->string('resultat');
+            $table->string('b_nom');
+            $table->string('n_nom');
         });
     }
 

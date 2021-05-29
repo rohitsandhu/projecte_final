@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Partida extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'created_at'  => 'date:d-m-Y H:i'
+    ];
 }

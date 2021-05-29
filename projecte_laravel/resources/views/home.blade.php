@@ -7,13 +7,82 @@
 @section('custom_css')
 
     <link rel="stylesheet" href="{{asset('css/custom_css.css')}}">
+
+
+    <style>
+        .link_w {
+            width: 65px;
+            height: 4px;
+            background: lightgreen;
+            position: relative;
+            animation: mymove 2s infinite;
+        }
+
+        .link_l {
+            width: 65px;
+            height: 4px;
+            background: red;
+            position: relative;
+            animation: mymove 2s infinite;
+        }
+
+        .link_d {
+            width: 65px;
+            height: 4px;
+            background: orange;
+            position: relative;
+            animation: mymove 2s infinite;
+        }
+
+        @keyframes mymove {
+            from {left: 0px;}
+            to {left: 40%;}
+        }
+
+
+    </style>
 @endsection
 
 
 @section('content')
 
 <div class="row">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary amagar" id="modal_button" data-bs-toggle="modal" data-bs-target="#exampleModal">
 
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <div class="w-100 d-flex justify-center">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">GAME RESULT</h5>
+
+                    </div>
+{{--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--}}
+                </div>
+                <div class="modal-body d-flex justify-content-between">
+                    <div>
+                        <h5 class="mx-5 mb-0" id="jugador_white"></h5>
+                        <p class="" id="p_jugador_white"></p>
+                    </div>
+                    <div>
+                        <h3>VS</h3>
+                    </div>
+                    <div>
+                        <h5 class="mx-5 mb-0" id="jugador_black"></h5>
+                        <p class="" id="p_jugador_black"></p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="col" id="div_home">
         <h1 class="m-2">HOME</h1>
@@ -74,12 +143,11 @@
         </div>
 
     </div>
-{{--    draggable-pieces--}}
     <div class="col-1 amagar" id="div_fake_1"></div>
     <div class="col-lg-6 col-md-10 col-sm-10 py-3 pt-0 amagar" id="div2">
 {{--        <p style="font-size: 20px"> You vs. Hikaru Nakamura</p>--}}
 <div class="container-fluid d-flex justify-center">
-    <h3 class="m-0 text-center"> GAME NAME: dsjfksdjfkldsj </h3>
+    <h3 class="m-0 text-center" id="game_title"> </h3>
 </div>
         <input type="hidden" id="b_id">
         <input type="hidden" id="n_id">

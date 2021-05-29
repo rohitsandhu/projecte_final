@@ -57,11 +57,12 @@ socket.on('goGame', function(partida){
 
     console.log("credencials partida ->>> ")
     console.log(partida)
+    $('#game_title').text('GAME NAME: '+partida['game_name'])
     $('#token_sala').val(partida['game_token'])
     if (partida['player2_id'] !== '' ){
         console.log("la partida ja pot començar :D");
         console.log("la partida ja pot començar :D");
-        console.log(partida['player2_id'] )
+        console.log(partida['player2_id'])
         if (partida['player2_id'] == $('#id_user_logged').val()){
             // orientation="black"
             // $('#taula').attr('orientation','black')
@@ -82,14 +83,31 @@ socket.on('goGame', function(partida){
 })
 
 
-socket.on("acabar_partida", partida =>{
+socket.on("acabar_partida_amb_guanyador", function(partidaa){
 
-    if (partida['game_token'] == $('#partida_token').val()){
+    if (partidaa['game_token'] == $('#partida_token').val()){
 
         console.log("(((((((((((((((((((((((((((((((((((((((((((((")
-        console.log(partida)
+        console.log(partidaa)
         console.log("(((((((((((((((((((((((((((((((((((((((((((((")
 
+        $('#modal_button').trigger('click');
+
+            console.log("-------------------------------")
+            console.log(partidaa['player1_name'])
+            console.log('-------------------------------')
+            $('#jugador_white').text(partidaa['player1_name']);
+            $('#jugador_black').text(partidaa['player2_name']);
+            if (partidaa['res'] == 'White'){
+                $('#p_jugador_black').addClass('link_w')
+                $('#p_jugador_white').addClass('link_l')
+            }else if(partidaa['res'] == 'Black'){
+                $('#p_jugador_white').addClass('link_w')
+                $('#p_jugador_black').addClass('link_l')
+            }else{
+                $('#p_jugador_white').addClass('link_d')
+                $('#p_jugador_black').addClass('link_d')
+            }
 
         $.ajax({
             type:'post',
@@ -97,19 +115,43 @@ socket.on("acabar_partida", partida =>{
             data: {
                 '_token': $('meta[name="csrf-token"]').attr('content'),
                 '_method': 'post',
-                'partida': {
-                    'game_token': partida['token'],
-                    'game_name': partida['game_name'],
-                    'game_pass': partida['game_pass'],
-                    'player1_id' : partida['player1_id'],
-                    'player1_name' : partida['player1_name'],
-                    'socket_id_player1': partida['socket_id_player1'],
-                    'player2_id' :  partida['player2_id'],
-                    'player2_name' :  partida['player2_name'],
-                    'socket_id_player2':  partida['socket_id_player2'],
-                    'estat': partida['estat'],
-                    'perdedor': partida['perdedor'],
-                },
+                'partida': partidaa,
+            },
+            success:function(data) {
+
+            },error: function () {
+
+            }
+        });
+    }
+})
+
+socket.on("acabar_partida_amb_empat", function(partidaa){
+
+    if (partidaa['game_token'] == $('#partida_token').val()){
+
+        $('#modal_button').trigger('click');
+
+        $('#jugador_white').text(partidaa['player1_name']);
+        $('#jugador_black').text(partidaa['player2_name']);
+        if (partidaa['res'] == 'White'){
+            $('#p_jugador_black').addClass('link_w')
+            $('#p_jugador_white').addClass('link_l')
+        }else if(partidaa['res'] == 'Black'){
+            $('#p_jugador_white').addClass('link_w')
+            $('#p_jugador_black').addClass('link_l')
+        }else{
+            $('#p_jugador_white').addClass('link_d')
+            $('#p_jugador_black').addClass('link_d')
+        }
+
+        $.ajax({
+            type:'post',
+            url: '/end_game',
+            data: {
+                '_token': $('meta[name="csrf-token"]').attr('content'),
+                '_method': 'post',
+                'partida': partidaa,
             },
             success:function(data) {
 
@@ -363,7 +405,7 @@ function updateStatus() {
         console.log( ` ${moveColor} ha perdut`)
         console.log( ` ${moveColor} ha perdut`)
         console.log( ` ${moveColor} ha perdut`)
-        socket.emit("partida_acabada", {
+        socket.emit("partida_acabada_amb_guanyador", {
             'b_id': $('#b_id').val(),
             'n_id': $('#n_id').val(),
             'partida_token': $('#partida_token').val(),
@@ -373,6 +415,12 @@ function updateStatus() {
     } else if (game.in_draw()) {
         status = "Game over, drawn/stallmate position";
         console.log("heu empatat cracks")
+        socket.emit("partida_acabada_amb_empat", {
+            'b_id': $('#b_id').val(),
+            'n_id': $('#n_id').val(),
+            'partida_token': $('#partida_token').val(),
+            'perdedor': "draw",
+        });
     } else {
         status = `${moveColor}'s turn`;
         console.log("et toca moure"+status)
