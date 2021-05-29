@@ -22,6 +22,8 @@ Route::get('game', [GameController::class, "game"])->name("game")->middleware(Ch
 
 Route::post('end_game',[GameController::class,"end_game"])->name('end_game')->middleware(CheckLogged::class);
 
+Route::get('historial',[UserController::class,'historial'])->name('historial')->middleware(CheckLogged::class);
+
 //Route::get('/dashboard', function () {
 //    return view('dashboard');
 //})->middleware(['auth'])->name('dashboard');

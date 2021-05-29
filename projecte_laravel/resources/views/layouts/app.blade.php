@@ -14,6 +14,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Passion+One&display=swap" rel="stylesheet">
 
 
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Signika+Negative:wght@700&display=swap" rel="stylesheet">
+
+    {{-- boostrap icons import   --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 {{--    <title></title>--}}
     @yield('title')
@@ -57,8 +62,6 @@
 
     </style>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -70,44 +73,40 @@
     <div class="row">
         <div class="col-sm-auto bg-dark text-white sticky-top">
             <div class="d-flex flex-sm-column flex-row bg-dark text-white flex-nowrap bg-light align-items-center sticky-top">
-                <a href="/" class="d-block p-3 link-dark bg-dark text-white text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
-                    <i class="bi-bootstrap fs-1"></i>
+                <a href="{{route('home')}}" class="d-block p-3 link-dark bg-dark text-white text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+{{--                    <i class="bi-bootstrap fs-1"></i>--}}
+                    <img src="{{asset('img/logo.png')}}" style="height: 50px; width: auto" alt="">
                 </a>
                 <ul class="nav nav-pills nav-flush bg-dark text-white flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
+
                     <li class="nav-item">
-                        <a href="#" class="nav-link py-3 bg-dark text-white px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                            <i class="bi-house fs-1"></i>
+                        <a href="{{route('historial')}}" class="nav-link py-3 bg-dark text-white px-2" title="Match history" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="bi bi-layout-text-sidebar-reverse h2"></i>
                         </a>
                     </li>
+
                     <li>
-                        <a href="#" class="nav-link py-3 bg-dark text-white px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
-                            <i class="bi-speedometer2 fs-1"></i>
+                        <a href="{{route('home')}}" class="nav-link py-3 px-2 bg-dark text-white" title="Profile" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Profile">
+                            <i class="bi-person-circle h2"></i>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="nav-link py-3 bg-dark text-white px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-                            <i class="bi-table fs-1"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link py-3 px-2 bg-dark text-white" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Products">
-                            <i class="bi-heart fs-1"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link py-3 px-2 bg-dark text-white " title="asdfasdfsadf" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Customers">
-                            <i class="bi-people fs-1"></i>
-                        </a>
-                    </li>
+
                 </ul>
                 <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark bg-dark text-white text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi-person-circle h2"></i>
+                    <a href="#"  class="d-flex align-items-center justify-content-center p-3 link-dark bg-dark text-white text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+                           <span  title="{{Auth::user()->name}}" style="max-width: 60px; overflow: hidden"> {{Auth::user()->name}} </span>
                     </a>
-                    <ul class="dropdown-menu text-small shadow bg-dark text-white" aria-labelledby="dropdownUser3">
-                        <li><a class="dropdown-item bg-dark text-white" href="#">New project...</a></li>
-                        <li><a class="dropdown-item bg-dark text-white" href="#">Settings</a></li>
-                        <li><a class="dropdown-item bg-dark text-white" href="#">Profile</a></li>
+                    <ul class="dropdown-menu text-small shadow bg-dark text-white" aria-labelledby="dropd   ownUser3">
+                        <li>
+                            <a class="dropdown-item bg-dark text-white" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>

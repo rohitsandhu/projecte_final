@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    <title > Home page </title>
+    <title > Rohit's chess</title>
 @endsection
 
 @section('custom_css')
