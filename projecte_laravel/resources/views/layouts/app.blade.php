@@ -19,6 +19,43 @@
     @yield('title')
 
     @yield('custom_css')
+    <style>
+        ::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(153, 50, 50, 0.3);
+            background-color: #F5F5F5;
+        }
+
+        ::-webkit-scrollbar
+        {
+            width: 6px;
+            background-color: #F5F5F5;
+            height: 7px;
+        }
+
+        ::-webkit-scrollbar-thumb
+        {
+            background-color: #6c6c6c;
+        }
+
+        tbody {
+            display: block;
+            max-height: 80vh;
+            overflow: auto;
+        }
+        thead, tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        thead {
+            width: calc( 100% - 1em )
+        }
+        table {
+            width: 400px;
+        }
+
+    </style>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
