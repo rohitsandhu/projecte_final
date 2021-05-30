@@ -30,6 +30,29 @@
             </thead>
             <tbody id="taula_historial" class="text-white">
 
+            @if(count($historial) > 0 )
+
+                @foreach($historial as $p)
+
+                    <tr class="text-black m-0 text-center">
+                        <td class="m-0">{{$p->b_id}}</td>
+                        <td class="m-0">{{$p->n_id}}</td>
+                        <td class="m-0">{{$p->resultat}}</td>
+                        <td class="m-0">{{$p->created_at}}</td>
+                        <td class="m-0"> <button class="btn btn-dark"> Analize</button> </td>
+                    </tr>
+
+                @endforeach
+
+
+            @else
+
+                <tr>
+                    <th class="text-mute" colspan="5">
+                            No matches found
+                    </th>
+                </tr>
+            @endif
             </tbody>
         </table>
 
