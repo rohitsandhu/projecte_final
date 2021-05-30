@@ -51,10 +51,8 @@
     <audio id="check" class="amagar" src="{{asset('audio/check.mp3')}}"></audio>
 
     <button type="button" class="btn btn-primary amagar" id="modal_button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-
     </button>
 
-    <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -146,10 +144,10 @@
     </div>
     <div class="col-1 amagar" id="div_fake_1"></div>
     <div class="col-lg-6 col-md-10 col-sm-10 py-3 pt-0 amagar" id="div2">
-{{--        <p style="font-size: 20px"> You vs. Hikaru Nakamura</p>--}}
-<div class="container-fluid d-flex justify-center">
-    <h3 class="m-0 text-center" id="game_title"> </h3>
-</div>
+
+    <div class="container-fluid d-flex justify-center">
+        <h3 class="m-0 text-center" id="game_title"> </h3>
+    </div>
         <input type="hidden" id="b_id">
         <input type="hidden" id="n_id">
         <input type="hidden" id="partida_token">

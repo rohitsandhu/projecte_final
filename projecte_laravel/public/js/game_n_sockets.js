@@ -33,7 +33,7 @@ socket.on('game_full',(id_user) =>{
 
 
 socket.on('secondplayerfound', function(partida){
-    console.log("second person found!!!")
+    // console.log("second person found!!!")
     if ($('#id_user_logged').val() == partida['player1_id']){
         $('#enemy_name').text(partida['player2_name'])
 
@@ -55,19 +55,19 @@ socket.on('goGame', function(partida){
     $('#div1').removeClass('amagar')
     $('#div2').removeClass('amagar')
 
-    console.log("credencials partida ->>> ")
-    console.log(partida)
+    // console.log("credencials partida ->>> ")
+    // console.log(partida)
     $('#game_title').text('GAME NAME: '+partida['game_name'])
     $('#token_sala').val(partida['game_token'])
     if (partida['player2_id'] !== '' ){
-        console.log("la partida ja pot començar :D");
-        console.log("la partida ja pot començar :D");
-        console.log(partida['player2_id'])
+        // console.log("la partida ja pot començar :D");
+        // console.log("la partida ja pot començar :D");
+        // console.log(partida['player2_id'])
         if (partida['player2_id'] == $('#id_user_logged').val()){
 
             board.orientation = 'black';
             $('#enemy_name').text(partida['player1_name'])
-            console.log("tu jugas amb les peces negres   ")
+            // console.log("tu jugas amb les peces negres   ")
             document.getElementsByTagName("title")[0].innerText = "Chess Game";
             // socket.emit('secondplayerfound', partida)
             $('#b_id').val(partida['player1_id'])
@@ -77,7 +77,7 @@ socket.on('goGame', function(partida){
         }
     }else{
         $('#status').text('Waiting for the other player.');
-        console.log("waiting for the other player")
+        // console.log("waiting for the other player")
     }
 })
 
@@ -86,15 +86,15 @@ socket.on("acabar_partida_amb_guanyador", function(partidaa){
 
     if (partidaa['game_token'] == $('#partida_token').val()){
 
-        console.log("(((((((((((((((((((((((((((((((((((((((((((((")
-        console.log(partidaa)
-        console.log("(((((((((((((((((((((((((((((((((((((((((((((")
+        // console.log("(((((((((((((((((((((((((((((((((((((((((((((")
+        // console.log(partidaa)
+        // console.log("(((((((((((((((((((((((((((((((((((((((((((((")
 
         $('#modal_button').trigger('click');
 
-            console.log("-------------------------------")
-            console.log(partidaa['player1_name'])
-            console.log('-------------------------------')
+            // console.log("-------------------------------")
+            // console.log(partidaa['player1_name'])
+            // console.log('-------------------------------')
             $('#jugador_white').text(partidaa['player1_name']);
             $('#jugador_black').text(partidaa['player2_name']);
             if (partidaa['res'] == 'White'){
@@ -170,14 +170,14 @@ function crearPartida(){
     var user_name = $('#name_user').val();
     var user_id = $('#id_user').val();
 
-    console.log("game_name-->>>")
-    console.log(game_name)
-    console.log($('#game_name').text())
-    console.log(" ->>>")
-    console.log(game_pass)
+    // console.log("game_name-->>>")
+    // console.log(game_name)
+    // console.log($('#game_name').text())
+    // console.log(" ->>>")
+    // console.log(game_pass)
 
     if (game_name !== "" && game_pass !== "") {
-        console.log("in if")
+        // console.log("in if")
 
         socket.emit('crearPartida', {
             'game_name' : game_name,
@@ -186,7 +186,7 @@ function crearPartida(){
             'user_id' : user_id
         });
     }else{
-        console.log("alun dels camps de crear paridason empty")
+        // console.log("alun dels camps de crear paridason empty")
         $('#error_create_fill').removeClass('amagar')
     }
 }
@@ -205,12 +205,12 @@ function entrarPartida(){
     var user_name2 = $('#name_user2').val();
     var user_id2 = $('#id_user2').val();
 
-    console.log(game_name2)
+    // console.log(game_name2)
     // console.log($('#game_name').text())
-    console.log(game_pass2)
+    // console.log(game_pass2)
 
     if (game_name2 !== "" && game_pass2 !== "") {
-        console.log("in if")
+        // console.log("in if")
 
         socket.emit('joinGame', {
             'game_name' : game_name2,
@@ -219,7 +219,7 @@ function entrarPartida(){
             'user_id' : user_id2
         });
     }else{
-        console.log("algun dels camps de unit-te esta buit")
+        // console.log("algun dels camps de unit-te esta buit")
         $('#error_join_fill').removeClass('amagar')
     }
 }
@@ -273,15 +273,15 @@ board.addEventListener('drag-start', (e) => {
         return;
     }
 
-    console.log("orientació ->>>>>")
-    console.log(orientation)
+    // console.log("orientació ->>>>>")
+    // console.log(orientation)
     // orientation === 'black' &&
 
-    console.log("game.turn --->>>>")
-    console.log(game.turn())
+    // console.log("game.turn --->>>>")
+    // console.log(game.turn())
     if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
         (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-        console.log("en el prevent default :ccccccccccccccccccccc")
+        // console.log("en el prevent default :ccccccccccccccccccccc")
         e.preventDefault();
         return;
     }else{
@@ -301,9 +301,9 @@ board.addEventListener('drop', (e) => {
     // treure els moviments marcats
     removeGreySquares();
 
-    console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-    console.log(source)
-    console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+    // console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+    // console.log(source)
+    // console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
     // mira si el moviment es legal
     const move = game.move({
         from: source,
@@ -311,7 +311,7 @@ board.addEventListener('drop', (e) => {
         promotion: 'q' // NOTE: en cas de ser un peo i arribal al final ho premou a reina sempre
     });
 
-    console.log("updating...")
+    // console.log("updating...")
 
 
 
@@ -323,13 +323,13 @@ board.addEventListener('drop', (e) => {
     // proves
     if (move === null) {
         setAction('snapback');
-        console.log("bacck to normal")
+        // console.log("bacck to normal")
     }else{
 
-        console.log('this is the socket id'+socket.id)
-        console.log('this is the socket id'+socket.id)
-        console.log('this is the socket id'+socket.id)
-        console.log('this is the socket id'+socket.id)
+        // console.log('this is the socket id'+socket.id)
+        // console.log('this is the socket id'+socket.id)
+        // console.log('this is the socket id'+socket.id)
+        // console.log('this is the socket id'+socket.id)
 
         socket.emit('game', {
             'source': source,
@@ -339,7 +339,7 @@ board.addEventListener('drop', (e) => {
             'game_token': $('#token_sala').val()
         });
         updateStatus();
-        console.log("canvi de posicio")
+        // console.log("canvi de posicio")
     }
 });
 
@@ -378,7 +378,7 @@ board.addEventListener('mouseout-square', (e) => {
 
 board.addEventListener('snap-end', (e) => {
     board.setPosition(game.fen())
-    console.log('moviment ---->>'+game.fen())
+    // console.log('moviment ---->>'+game.fen())
 });
 
 function updateStatus() {
@@ -394,15 +394,15 @@ function updateStatus() {
         var check = document.getElementById("check");
         check.play();
         status = `Game over, ${moveColor} is in checkmate.`;
-        console.log("has guanyat crack");
-        console.log( ` ${moveColor} ha perdut`)
-        console.log( ` ${moveColor} ha perdut`)
-        console.log( ` ${moveColor} ha perdut`)
-        console.log( ` ${moveColor} ha perdut`)
-        console.log( ` ${moveColor} ha perdut`)
-        console.log( ` ${moveColor} ha perdut`)
-        console.log( ` ${moveColor} ha perdut`)
-        console.log( ` ${moveColor} ha perdut`)
+        // console.log("has guanyat crack");
+        // console.log( ` ${moveColor} ha perdut`)
+        // console.log( ` ${moveColor} ha perdut`)
+        // console.log( ` ${moveColor} ha perdut`)
+        // console.log( ` ${moveColor} ha perdut`)
+        // console.log( ` ${moveColor} ha perdut`)
+        // console.log( ` ${moveColor} ha perdut`)
+        // console.log( ` ${moveColor} ha perdut`)
+        // console.log( ` ${moveColor} ha perdut`)
         socket.emit("partida_acabada_amb_guanyador", {
             'b_id': $('#b_id').val(),
             'n_id': $('#n_id').val(),
@@ -416,7 +416,7 @@ function updateStatus() {
         var check = document.getElementById("check");
         check.play();
         status = "Game over, drawn/stallmate position";
-        console.log("heu empatat cracks")
+        // console.log("heu empatat cracks")
         socket.emit("partida_acabada_amb_empat", {
             'b_id': $('#b_id').val(),
             'n_id': $('#n_id').val(),
@@ -426,12 +426,12 @@ function updateStatus() {
         });
     } else {
         status = `${moveColor}'s turn`;
-        console.log("et toca moure"+status)
+        // console.log("et toca moure"+status)
         if (game.in_check()) {
             var check = document.getElementById("check");
             check.play();
             status += `, ${moveColor} is in check`;
-            console.log("estas en jaque crack")
+            // console.log("estas en jaque crack")
         }else{
             var drop = document.getElementById("drop");
             drop.play();
@@ -442,8 +442,8 @@ function updateStatus() {
     // fenElement.innerHTML = game.fen();
     //pgnElement.innerHTML = game.pgn();
 
-    console.log("fen ->>>>>>"+game.fen())
-    console.log("pgn ->>>>"+game.pgn())
+    // console.log("fen ->>>>>>"+game.fen())
+    // console.log("pgn ->>>>"+game.pgn())
 
 
     var split = game.pgn().split(' ');
@@ -460,16 +460,16 @@ function updateStatus() {
         td.innerText = split[xd];
 
         tr.append(td);
-        console.log(split[xd])
+        // console.log(split[xd])
         $('#taula_res').append(tr)
         iteration++;
         if (iteration > 2){
             $('#taula_res').append(tr)
-            console.log('next round ')
+            // console.log('next round ')
             iteration = 0;
         }
     }
-    console.log(split)
+    // console.log(split)
 }
 
 
