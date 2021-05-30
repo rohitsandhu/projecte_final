@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MovimentsPartida;
 use App\Models\Partida;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -15,7 +16,6 @@ class GameController extends Controller
     function end_game(Request $request){
         $partida = $request->request->get('partida');
         $game = new Partida();
-        $game->moviments_partida = "";
         $game->b_id = $partida['player1_id'];
         $game->n_id = $partida['player2_id'];
         $game->b_nom = $partida['player1_name'];
@@ -37,8 +37,17 @@ class GameController extends Controller
         $partides =  Partida::where("token","=",$game->token)->get();
 
         if (count($partides) > 1){
-            $p = Partida::where("token","=",$game->token)->first();
+
+            $p = Partida::where("token","=",$game->token)->orderBy('id','desc')->first();
             $p->delete();
+        }else{
+            foreach ($partida['moviments_partida'] as $m){
+
+                $moviment = new MovimentsPartida();
+                $moviment->id_partida = $game->id;
+                $moviment->fen = $m;
+                $moviment->save();
+            }
         }
     }
 }

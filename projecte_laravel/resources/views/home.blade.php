@@ -47,7 +47,9 @@
 @section('content')
 
 <div class="row">
-    <!-- Button trigger modal -->
+    <audio id="drop" class="amagar" src="{{asset('audio/drop1.mp3')}}"></audio>
+    <audio id="check" class="amagar" src="{{asset('audio/check.mp3')}}"></audio>
+
     <button type="button" class="btn btn-primary amagar" id="modal_button" data-bs-toggle="modal" data-bs-target="#exampleModal">
 
     </button>
@@ -59,17 +61,16 @@
                 <div class="modal-header text-center">
                     <div class="w-100 d-flex justify-center">
                         <h5 class="modal-title text-center" id="exampleModalLabel">GAME RESULT</h5>
-
                     </div>
-{{--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--}}
                 </div>
                 <div class="modal-body d-flex justify-content-between">
                     <div>
                         <h5 class="mx-5 mb-0" id="jugador_white"></h5>
                         <p class="" id="p_jugador_white"></p>
                     </div>
-                    <div>
+                    <div class="text-center">
                         <h3>VS</h3>
+                        <h6 id="resultat"></h6>
                     </div>
                     <div>
                         <h5 class="mx-5 mb-0" id="jugador_black"></h5>

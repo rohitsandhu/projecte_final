@@ -24,6 +24,8 @@ Route::post('end_game',[GameController::class,"end_game"])->name('end_game')->mi
 
 Route::get('historial',[UserController::class,'historial'])->name('historial')->middleware(CheckLogged::class);
 
+Route::post('getMovimentsPartida',[UserController::class,'getMovimentsPartida'])->name('getMovimentsPartida')->middleware(CheckLogged::class);
+
 //Route::get('/dashboard', function () {
 //    return view('dashboard');
 //})->middleware(['auth'])->name('dashboard');

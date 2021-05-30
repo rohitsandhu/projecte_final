@@ -524,6 +524,7 @@ class ComposerStaticInit76b4bff3d40d0f4a5f6b470187869d3f
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
+        'App\\Models\\MovimentsPartida' => __DIR__ . '/../..' . '/app/Models/MovimentsPartida.php',
         'App\\Models\\Partida' => __DIR__ . '/../..' . '/app/Models/Partida.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePartidasTable extends Migration
+class CreateMovimentsPartidasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreatePartidasTable extends Migration
      */
     public function up()
     {
-        Schema::create('partidas', function (Blueprint $table) {
+        Schema::create('moviments_partidas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('token',300);
-            $table->integer('b_id');
-            $table->integer('n_id');
-            $table->string('resultat');
-            $table->string('b_nom');
-            $table->string('n_nom');
+            $table->text('fen');
+            $table->string('id_partida');
         });
     }
 
@@ -32,6 +28,6 @@ class CreatePartidasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('partidas');
+        Schema::dropIfExists('moviments_partidas');
     }
 }

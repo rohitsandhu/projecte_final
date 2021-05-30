@@ -15,31 +15,38 @@ const io = new Server(server, {
 
 var partides = [];
 
-
-
-for (var i = 0; i<10; i++){
-    partides.push({
-        'game_token': i,
-        'game_name': 'aoksdfjdslñakjdflkasd',
-        'game_pass': 'aoksdfjdslñakjdflkasd',
-        'player1_id' : 'aoksdfjdslñakjdflkasd',
-        'player1_name' : 'aoksdfjdslñakjdflkasd',
-        'socket_id_player1': 'aoksdfjdslñakjdflkasd',
-        'player2_id' : 'aoksdfjdslñakjdflkasd',
-        'player2_name' : 'aoksdfjdslñakjdflkasd',
-        'socket_id_player2': 'aoksdfjdslñakjdflkasd',
-        'estat': 'waiting players',
-    })
-}
+// for (var i = 0; i<10; i++){
+//     partides.push({
+//         'game_token': i,
+//         'game_name': 'aoksdfjdslñakjdflkasd',
+//         'game_pass': 'aoksdfjdslñakjdflkasd',
+//         'player1_id' : 'aoksdfjdslñakjdflkasd',
+//         'player1_name' : 'aoksdfjdslñakjdflkasd',
+//         'socket_id_player1': 'aoksdfjdslñakjdflkasd',
+//         'player2_id' : 'aoksdfjdslñakjdflkasd',
+//         'player2_name' : 'aoksdfjdslñakjdflkasd',
+//         'socket_id_player2': 'aoksdfjdslñakjdflkasd',
+//         'estat': 'waiting players',
+//     })
+// }
 
 
 io.on('connection', (socket) => {
     console.log('a user connected '+socket.id);
 
     socket.on('game', (moviment) => {
+
         console.log('misatge arribat')
         console.log("el moviment a fer i el token de la sala son els seguent ->>>>")
         console.log(moviment)
+
+        for (var p in partides){
+            if (partides[p]['game_token'] === moviment['game_token']){
+                partides[p]['moviments_partida'].push(moviment['fen']);
+            }
+        }
+
+
         socket.broadcast.emit('game', moviment);
     })
 
@@ -134,6 +141,7 @@ io.on('connection', (socket) => {
             var token = bigToken(rand())
 
             console.log(token)
+            console.log(token)
 
             partides.push({
                 'game_token': token,
@@ -145,7 +153,8 @@ io.on('connection', (socket) => {
                 'player2_id' : '',
                 'player2_name' : '',
                 'socket_id_player2': '',
-                'estat': ''
+                'estat': '',
+                'moviments_partida': [],
             })
 
             socket.emit('goGame',  {
@@ -159,6 +168,7 @@ io.on('connection', (socket) => {
                 'player2_name' : '',
                 'socket_id_player2': '',
                 'estat': 'waiting players',
+                'moviments_partida': [],
             })
 
         }else{
@@ -195,6 +205,7 @@ io.on('connection', (socket) => {
                 'player2_name' :  newArray[0]['player2_name'],
                 'socket_id_player2':  newArray[0]['socket_id_player2'],
                 'estat': newArray[0]['estat'],
+                'moviments_partida': newArray[0]['moviments_partida'],
                 'res': partida['perdedor'],
             }
 
@@ -224,6 +235,7 @@ io.on('connection', (socket) => {
                 'player2_name' :  newArray[0]['player2_name'],
                 'socket_id_player2':  newArray[0]['socket_id_player2'],
                 'estat': newArray[0]['estat'],
+                'moviments_partida': newArray[0]['moviments_partida'],
                 'res': "draw",
             }
             socket.emit("acabar_partida_amb_empat",(partidaa));
@@ -268,7 +280,6 @@ io.on('connection', (socket) => {
                         partides[p]['player2_id'] = credencials['user_id'];
                         partides[p]['player2_name'] = credencials['user_name'];
                         partides[p]['socket_id_player2'] = socket.id;
-
                     }
                 }
 
@@ -282,7 +293,8 @@ io.on('connection', (socket) => {
                     'player2_id': credencials['user_id'],
                     'player2_name': credencials['user_name'],
                     'socket_id_player2': socket.id,
-                    'estat': 'waiting players'
+                    'estat': 'waiting players',
+                    'moviments_partida':newArray[0]['moviments_partida']
                 };
 
                 console.log("array a return amb tu com a segon jugador ->>>>")

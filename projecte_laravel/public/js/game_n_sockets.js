@@ -64,8 +64,7 @@ socket.on('goGame', function(partida){
         console.log("la partida ja pot començar :D");
         console.log(partida['player2_id'])
         if (partida['player2_id'] == $('#id_user_logged').val()){
-            // orientation="black"
-            // $('#taula').attr('orientation','black')
+
             board.orientation = 'black';
             $('#enemy_name').text(partida['player1_name'])
             console.log("tu jugas amb les peces negres   ")
@@ -101,12 +100,11 @@ socket.on("acabar_partida_amb_guanyador", function(partidaa){
             if (partidaa['res'] == 'White'){
                 $('#p_jugador_black').addClass('link_w')
                 $('#p_jugador_white').addClass('link_l')
+                $('#resultat').text("Black Is The Winner")
             }else if(partidaa['res'] == 'Black'){
                 $('#p_jugador_white').addClass('link_w')
                 $('#p_jugador_black').addClass('link_l')
-            }else{
-                $('#p_jugador_white').addClass('link_d')
-                $('#p_jugador_black').addClass('link_d')
+                $('#resultat').text("White Is The Winner")
             }
 
         $.ajax({
@@ -134,16 +132,9 @@ socket.on("acabar_partida_amb_empat", function(partidaa){
 
         $('#jugador_white').text(partidaa['player1_name']);
         $('#jugador_black').text(partidaa['player2_name']);
-        if (partidaa['res'] == 'White'){
-            $('#p_jugador_black').addClass('link_w')
-            $('#p_jugador_white').addClass('link_l')
-        }else if(partidaa['res'] == 'Black'){
-            $('#p_jugador_white').addClass('link_w')
-            $('#p_jugador_black').addClass('link_l')
-        }else{
-            $('#p_jugador_white').addClass('link_d')
-            $('#p_jugador_black').addClass('link_d')
-        }
+        $('#p_jugador_white').addClass('link_d')
+        $('#p_jugador_black').addClass('link_d')
+        $('#resultat').text("DRAW")
 
         $.ajax({
             type:'post',
@@ -310,6 +301,9 @@ board.addEventListener('drop', (e) => {
     // treure els moviments marcats
     removeGreySquares();
 
+    console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+    console.log(source)
+    console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
     // mira si el moviment es legal
     const move = game.move({
         from: source,
@@ -320,7 +314,7 @@ board.addEventListener('drop', (e) => {
     console.log("updating...")
 
 
-    updateStatus();
+
     // // illegal move
     // if (move === null) {
     //     setAction('snapback');
@@ -344,6 +338,7 @@ board.addEventListener('drop', (e) => {
             'fen': game.fen(),
             'game_token': $('#token_sala').val()
         });
+        updateStatus();
         console.log("canvi de posicio")
     }
 });
@@ -395,6 +390,9 @@ function updateStatus() {
     }
 
     if (game.in_checkmate()) {
+
+        var check = document.getElementById("check");
+        check.play();
         status = `Game over, ${moveColor} is in checkmate.`;
         console.log("has guanyat crack");
         console.log( ` ${moveColor} ha perdut`)
@@ -410,9 +408,13 @@ function updateStatus() {
             'n_id': $('#n_id').val(),
             'partida_token': $('#partida_token').val(),
             'perdedor': `${moveColor}`,
+            'moviments_partida': game.pgn(),
         });
 
     } else if (game.in_draw()) {
+
+        var check = document.getElementById("check");
+        check.play();
         status = "Game over, drawn/stallmate position";
         console.log("heu empatat cracks")
         socket.emit("partida_acabada_amb_empat", {
@@ -420,13 +422,19 @@ function updateStatus() {
             'n_id': $('#n_id').val(),
             'partida_token': $('#partida_token').val(),
             'perdedor': "draw",
+            'moviments_partida': game.pgn(),
         });
     } else {
         status = `${moveColor}'s turn`;
         console.log("et toca moure"+status)
         if (game.in_check()) {
+            var check = document.getElementById("check");
+            check.play();
             status += `, ${moveColor} is in check`;
             console.log("estas en jaque crack")
+        }else{
+            var drop = document.getElementById("drop");
+            drop.play();
         }
     }
 
