@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
+const ok = true;
 
 const { Server } = require("socket.io");
 // const io = new Server(server);
@@ -66,36 +67,67 @@ io.on('connection', (socket) => {
         if (newArray.length > 0){
             console.log("el usuari desconnectat estava en partida")
 
-            var timeleft = 10;
+            console.log(" esperant 30 segons per veure si es torna a connectar ")
+            var timeleft = 3;
             var downloadTimer = setInterval(function(){
                 if(timeleft <= 0){
                     clearInterval(downloadTimer);
                 }
                 // document.getElementById("progressBar").value = 10 - timeleft;
-                console.log(10-timeleft)
+                console.log(3-timeleft)
                 timeleft -= 1;
 
-                if (10-timeleft === 10){
+                if (3-timeleft === 3 ){
 
                     console.log("#####################################################################")
-                    console.log("partides abans de borrar ->>>>")
+                    console.log(" arr partides abans de borrar ->>>>")
                     console.log("#####################################################################")
                     console.log(partides)
+
+
+                    if (newArray['socket_id_player1'] == socket.id){
+
+                        var partidaa = {
+                            'game_token': newArray[0]['game_token'],
+                            'game_name': newArray[0]['game_name'],
+                            'game_pass': newArray[0]['game_pass'],
+                            'player1_id': newArray[0]['player1_id'],
+                            'player1_name': newArray[0]['player1_name'],
+                            'socket_id_player1': newArray[0]['socket_id_player1'],
+                            'player2_id' :  newArray[0]['player2_id'],
+                            'player2_name' :  newArray[0]['player2_name'],
+                            'socket_id_player2':  newArray[0]['socket_id_player2'],
+                            'estat': newArray[0]['estat'],
+                            'moviments_partida': newArray[0]['moviments_partida'],
+                            'res': 'White',
+                        }
+                        socket.broadcast.emit("contrincant_abandonat",partidaa);
+                    }else{
+                        var partidaa = {
+                            'game_token': newArray[0]['game_token'],
+                            'game_name': newArray[0]['game_name'],
+                            'game_pass': newArray[0]['game_pass'],
+                            'player1_id': newArray[0]['player1_id'],
+                            'player1_name': newArray[0]['player1_name'],
+                            'socket_id_player1': newArray[0]['socket_id_player1'],
+                            'player2_id' :  newArray[0]['player2_id'],
+                            'player2_name' :  newArray[0]['player2_name'],
+                            'socket_id_player2':  newArray[0]['socket_id_player2'],
+                            'estat': newArray[0]['estat'],
+                            'moviments_partida': newArray[0]['moviments_partida'],
+                            'res': 'Black',
+                        }
+                        socket.broadcast.emit("contrincant_abandonat",partidaa);
+                    }
+
+
 
                     partides = borrarPartidaPerSocketId(partides, socket.id);
 
                     console.log("#####################################################################")
-                    console.log("partides despres de borrar partida on hi ha el jugador desconnectat");
+                    console.log(" arr partides despres de borrar partida on hi ha el jugador desconnectat");
                     console.log("#####################################################################")
                     console.log(partides)
-                    // for (var p in partides){
-                    //
-                    //     if (partides[p]['socket_id_player1'] === socket.id || partides[p]['socket_id_player2'] === socket.id){
-                    //
-                    //
-                    //     }
-                    //
-                    // }
 
                 }
 
@@ -103,7 +135,6 @@ io.on('connection', (socket) => {
         }else{
             console.log("el usuari desconnectat no estava en partida")
         }
-
     });
 
     // socket.on('secondplayerfound', function (partida) {

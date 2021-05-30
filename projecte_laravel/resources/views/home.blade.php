@@ -8,27 +8,26 @@
 
     <link rel="stylesheet" href="{{asset('css/custom_css.css')}}">
 
-
     <style>
         .link_w {
-            width: 65px;
-            height: 4px;
+            width: 100px;
+            height: 10px;
             background: lightgreen;
             position: relative;
             animation: mymove 2s infinite;
         }
 
         .link_l {
-            width: 65px;
-            height: 4px;
+            width: 100px;
+            height: 10px;
             background: red;
             position: relative;
             animation: mymove 2s infinite;
         }
 
         .link_d {
-            width: 65px;
-            height: 4px;
+            width: 100px;
+            height: 10px;
             background: orange;
             position: relative;
             animation: mymove 2s infinite;
@@ -36,13 +35,10 @@
 
         @keyframes mymove {
             from {left: 0px;}
-            to {left: 40%;}
+            to {left: 28%;}
         }
-
-
     </style>
 @endsection
-
 
 @section('content')
 
@@ -85,7 +81,6 @@
 
     <div class="col" id="div_home">
         <h1 class="m-2">HOME</h1>
-
         <input type="hidden" id="id_user_logged" value="{{ Auth::user()->id }}">
         <div class="container">
 
@@ -135,13 +130,12 @@
                         <p class="text-danger amagar mt-2" style="font-size: 20px" id="error_join_fill"> Fill all the fields!! </p>
                         <p class="text-danger amagar mt-2" style="font-size: 20px" id="error_join_credentials"> Game with these credencials not found!! </p>
                         <p class="text-danger amagar mt-2" style="font-size: 20px" id="error_join_full"> Game is full!! </p>
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
     <div class="col-1 amagar" id="div_fake_1"></div>
     <div class="col-lg-6 col-md-10 col-sm-10 py-3 pt-0 amagar" id="div2">
 

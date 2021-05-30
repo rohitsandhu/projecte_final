@@ -25,7 +25,6 @@ class GameController extends Controller
         if ($partida['res'] == "White"){
             $game->resultat = "Black";
             $game->save();
-
         }else if($partida['res'] == "Black"){
             $game->resultat = "White";
             $game->save();

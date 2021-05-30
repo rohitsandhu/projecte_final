@@ -154,6 +154,41 @@ socket.on("acabar_partida_amb_empat", function(partidaa){
 })
 
 
+socket.on('contrincant_abandonat', function (partidaa){
+
+    if (partidaa['game_token'] == $('#partida_token').val()){
+
+        $('#modal_button').trigger('click');
+        $('#jugador_white').text(partidaa['player1_name']);
+        $('#jugador_black').text(partidaa['player2_name']);
+        $('#resultat').text("You Win, Your Opponent Quit")
+        if (partidaa['res'] == 'White'){
+            $('#p_jugador_black').addClass('link_w')
+            $('#p_jugador_white').addClass('link_l')
+        }else if(partidaa['res'] == 'Black'){
+            $('#p_jugador_white').addClass('link_w')
+            $('#p_jugador_black').addClass('link_l')
+        }
+        $.ajax({
+            type:'post',
+            url: '/end_game',
+            data: {
+                '_token': $('meta[name="csrf-token"]').attr('content'),
+                '_method': 'post',
+                'partida': partidaa,
+            },
+            success:function(data) {
+
+            },error: function () {
+
+            }
+        });
+    }
+
+
+})
+
+
 //function crear partida
 function crearPartida(){
 
@@ -449,7 +484,7 @@ function updateStatus() {
     var split = game.pgn().split(' ');
 
     var iteration = 0;
-    $('#taula_res').empty()
+    $('#taula_res').empty();
     for (var xd in split){
         if (iteration === 0){
             var tr = document.createElement('tr');

@@ -11,6 +11,14 @@
         td{
             overflow: hidden;
         }
+        a{
+          text-decoration: none!important;
+          color: black!important;
+        }
+
+        a:hover{
+            color: grey!important;
+        }
     </style>
 @endsection
 
@@ -21,7 +29,7 @@
 
     <button type="button" class="btn btn-primary amagar" id="button_modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
     </button>
-    <audio id="audio" class="amagar" src="{{asset('audio/drop1.mp3')}}"></audio>
+    <audio id="audio" class="amagar" src="{{asset('audio/drop.mp3')}}"></audio>
 {{--    <audio id="audio" class="amagar" src="https://srv10.conversion-tool.com/dl/2/463ab6d47f9b04150175230dc32202bd/media-64cab183.mp3"></audio>--}}
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -66,8 +74,8 @@
                 @if(count($historial) > 0 )
                     @foreach($historial as $p)
                         <tr class="text-black m-0 text-center">
-                            <td class="m-0">{{$p->b_nom}}</td>
-                            <td class="m-0">{{$p->n_nom}}</td>
+                            <td class="m-0"><a href="{{route('profile', $p->b_id)}}">{{$p->b_nom}} </a></td>
+                            <td class="m-0"><a href="{{route('profile', $p->n_id)}}">{{$p->n_nom}}</a></td>
                             <td class="m-0">{{$p->resultat}}</td>
                             <td class="m-0">{{$p->created_at->format('Y-m-d H:i') }}</td>
                             <td class="m-0"> <button class="btn btn-dark button_analize" data-player_white="{{$p->b_nom}}" data-partida="{{$p->id}}" data-player_black="{{$p->n_nom}}" data-resultat="{{$p->resultat}}" > Analize </button> </td>

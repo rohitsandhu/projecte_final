@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Passion+One&display=swap" rel="stylesheet">
 
+    <link rel="icon" href="{{asset('img/logo.png')}}">
 
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Signika+Negative:wght@700&display=swap" rel="stylesheet">
 
@@ -80,13 +81,13 @@
                 <ul class="nav nav-pills nav-flush bg-dark text-white flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
 
                     <li class="nav-item">
-                        <a href="{{route('historial')}}" class="nav-link py-3 bg-dark text-white px-2" title="Match history" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <a href="{{route('historial',Auth::user()->id)}}" class="nav-link py-3 bg-dark text-white px-2" title="Match history" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="bi bi-layout-text-sidebar-reverse h2"></i>
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{route('home')}}" class="nav-link py-3 px-2 bg-dark text-white" title="Profile" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Profile">
+                        <a href="{{route('profile',Auth::user()->id)}}" class="nav-link py-3 px-2 bg-dark text-white" title="Profile" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Profile">
                             <i class="bi-person-circle h2"></i>
                         </a>
                     </li>
