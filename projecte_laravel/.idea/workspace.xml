@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f665fcaf-c304-447c-9513-6784b1346783" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/profile.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GameController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GameController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node-express-socket/socket_app/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/node-express-socket/socket_app/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/game_n_sockets.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/game_n_sockets.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/historial.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/historial.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +203,7 @@
       <workItem from="1622230152248" duration="595000" />
       <workItem from="1622276207898" duration="508000" />
       <workItem from="1622276717538" duration="35016000" />
-      <workItem from="1622363227154" duration="41358000" />
+      <workItem from="1622363227154" duration="42592000" />
     </task>
     <servers />
   </component>
