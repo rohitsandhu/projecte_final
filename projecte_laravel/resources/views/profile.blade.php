@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <h1> {{ $user->name }}'s profile </h1>
+    <h1 id="user_name"> {{ $user->name }}'s profile </h1>
     <div class="container-fluid">
 
         <div class="card text-center">
@@ -108,7 +108,6 @@
         function editarPerfil(){
             $('#button_editar_perfil').trigger('click');
         }
-
         function editar(){
             $('#error').addClass("amagar")
             $.ajax({
@@ -123,6 +122,7 @@
                     if (data === "ok"){
                         $('#close').trigger('click');
                         $('#name').text($('#name_m').val())
+                        $('#user_name').text($('#name_m').val()+'\' profile')
                     }else{
                         $('#error').removeClass("amagar");
                     }

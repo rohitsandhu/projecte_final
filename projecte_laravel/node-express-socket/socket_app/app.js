@@ -9,8 +9,8 @@ const { Server } = require("socket.io");
 
 const io = new Server(server, {
     cors: {
-        // origin: "http://localhost",
-        origin: "http://100.26.154.198",
+        origin: "http://localhost",
+        // origin: "http://100.26.154.198",
         methods: ["GET", "POST"],
     }
 });
@@ -47,8 +47,6 @@ io.on('connection', (socket) => {
                 partides[p]['moviments_partida'].push(moviment['fen']);
             }
         }
-
-
         socket.broadcast.emit('game', moviment);
     })
 
@@ -74,7 +72,6 @@ io.on('connection', (socket) => {
                 if(timeleft <= 0){
                     clearInterval(downloadTimer);
                 }
-                // document.getElementById("progressBar").value = 10 - timeleft;
                 console.log(3-timeleft)
                 timeleft -= 1;
 
@@ -84,7 +81,6 @@ io.on('connection', (socket) => {
                     console.log(" arr partides abans de borrar ->>>>")
                     console.log("#####################################################################")
                     console.log(partides)
-
 
                     if (newArray['socket_id_player1'] == socket.id){
 
@@ -121,8 +117,6 @@ io.on('connection', (socket) => {
                         socket.broadcast.emit("contrincant_abandonat",partidaa);
                     }
 
-
-
                     partides = borrarPartidaPerSocketId(partides, socket.id);
 
                     console.log("#####################################################################")
@@ -137,7 +131,6 @@ io.on('connection', (socket) => {
             console.log("el usuari desconnectat no estava en partida")
         }
     });
-
     // socket.on('secondplayerfound', function (partida) {
     //
     //     console.log('sending second player credentials to first player ')
@@ -210,7 +203,6 @@ io.on('connection', (socket) => {
         }
     });
 
-
     socket.on("partida_acabada_amb_guanyador", function(partida){
         console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         console.log(partida)
@@ -246,7 +238,6 @@ io.on('connection', (socket) => {
             console.log('????????????????????????????????????????????????????????')
             socket.emit("acabar_partida_amb_guanyador",(partidaa));
         }
-
 
     })
     socket.on("partida_acabada_amb_empat", function(partida){
@@ -293,7 +284,6 @@ io.on('connection', (socket) => {
         }else{
             console.log("partida trobada trobada amb les credencials indicades")
 
-
             console.log("mirar si aquesta partida no té segon jugador")
             if (newArray[0]['player2_id'] !== ''){
 
@@ -302,8 +292,6 @@ io.on('connection', (socket) => {
             }else {
 
                 console.log("partida trobada i no té dos jugadors acutalment")
-
-
 
                 console.log("afegin-te com a segon jugador")
 

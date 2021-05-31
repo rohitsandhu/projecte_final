@@ -137,7 +137,7 @@
     </div>
 
     <div class="col-1 amagar" id="div_fake_1"></div>
-    <div class="col-lg-6 col-md-10 col-sm-10 py-3 pt-0 amagar" id="div2">
+    <div class="col-lg-5 col-md-10 col-sm-10 py-3 pt-0 amagar" id="div2">
 
     <div class="container-fluid d-flex justify-center">
         <h3 class="m-0 text-center" id="game_title"> </h3>
@@ -153,7 +153,7 @@
         <input type="hidden" id="token_sala">
     </div>
     <div class="col-1 amagar" id="div_fake_2"></div>
-    <div class="col-lg-4 px-sm-2 px-0 bg-dark text-white amagar" id="div1">
+    <div class="col-lg-5 px-sm-2 px-0 bg-dark text-white amagar" style="height: 100vh;" id="div1">
         <hr class="text-white">
         <label style="font-size: 20px">Game status:</label>
         <div id="status" class="mt-1"></div>
